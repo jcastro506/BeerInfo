@@ -7,8 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.beerinfo.common.Resource
 import com.example.beerinfo.domain.model.Beer
 import com.example.beerinfo.domain.repository.BeerRepository
-import com.example.beerinfo.domain.use_case.getAllBeers.GetBeersUseCase
-import com.example.beerinfo.domain.use_case.getBeer.GetBeerUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
