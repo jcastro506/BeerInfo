@@ -13,5 +13,5 @@ interface RetrofitApi {
     @GET("beers/{beer_id}")
     suspend fun getBeerDetails(
         @Path("beer_id") beer_id : Int
-    ) : Beer
+    ) : List<Beer>
 }

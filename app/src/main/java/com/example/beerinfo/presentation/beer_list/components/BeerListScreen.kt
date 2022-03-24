@@ -58,6 +58,9 @@ fun BeerListScreen(
                 })
             }
         }
+        if(state.isLoading) {
+            CircularProgressIndicator(modifier = Modifier.align(Center))
+        }
     }
 }
 

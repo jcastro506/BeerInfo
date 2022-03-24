@@ -8,10 +8,13 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import com.example.beerinfo.presentation.beer_detail.components.BeerDetailsScreen
 import com.example.beerinfo.presentation.beer_list.BeerListViewModel
@@ -38,7 +41,7 @@ class MainActivity : ComponentActivity() {
                             BeerListScreen(navController = navController, viewModel = beerListViewModel)
                         }
                         composable(
-                            route = "beer_details_screen/{coinId}"
+                            route = "beer_details_screen/{beer_id}"
                         ) {
                             BeerDetailsScreen()
                         }
@@ -46,18 +49,5 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    BeerInfoTheme {
-        Greeting("Android")
     }
 }

@@ -13,7 +13,7 @@ class BeerRepositoryImpl @Inject constructor(
         return api.getAllBeers()
     }
 
-    override suspend fun getBeerDetails(beerId: Int): Beer {
+    override suspend fun getBeerDetails(beerId: Int): List<Beer> {
         return api.getBeerDetails(beerId)
     }
 

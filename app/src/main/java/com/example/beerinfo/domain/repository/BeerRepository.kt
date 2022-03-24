@@ -6,6 +6,6 @@ interface BeerRepository {
 
     suspend fun getAllBeers() : List<Beer>
 
-    suspend fun getBeerDetails(beerId : Int) : Beer
+    suspend fun getBeerDetails(beerId : Int) : List<Beer>
 
 }
