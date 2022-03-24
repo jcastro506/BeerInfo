@@ -1,4 +1,1 @@
 # BeerInfo
-# ListOBeers
-# ListOBeers
-# BeerInfo
