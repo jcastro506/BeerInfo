@@ -15,13 +15,13 @@ class GetBeerUseCase @Inject constructor(
 
     operator fun invoke(beerId : Int) : Flow<Resource<Beer>> = flow {
         try {
-            emit(Resource.Loading())
+            emit(Resource.Loading<Beer>())
             val beers = repository.getBeerDetails(beerId)
-            emit(Resource.Success(beers))
+            emit(Resource.Success<Beer>(beers))
         } catch (e : HttpException) {
-            emit(Resource.Error(e.localizedMessage ?: "Unknown error occured"))
+            emit(Resource.Error<Beer>(e.localizedMessage ?: "Unknown error occured"))
         } catch (e: IOException) {
-            emit(Resource.Error("Couldn't reach server. Bad internet"))
+            emit(Resource.Error<Beer>("Couldn't reach server. Bad internet"))
         }
     }
 

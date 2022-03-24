@@ -10,11 +10,11 @@ class BeerRepositoryImpl @Inject constructor(
 ) : BeerRepository {
 
     override suspend fun getAllBeers(): List<Beer> {
-        TODO("Not yet implemented")
+        return api.getAllBeers()
     }
 
     override suspend fun getBeerDetails(beerId: Int): Beer {
-        TODO("Not yet implemented")
+        return api.getBeerDetails(beerId)
     }
 
 }

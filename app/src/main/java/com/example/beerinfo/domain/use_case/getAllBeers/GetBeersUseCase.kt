@@ -15,13 +15,13 @@ class GetBeersUseCase @Inject constructor(
 
     operator fun invoke() : kotlinx.coroutines.flow.Flow<Resource<List<Beer>>> = flow {
         try {
-            emit(Resource.Loading())
+            emit(Resource.Loading<List<Beer>>())
             val beers = repository.getAllBeers()
-            emit(Resource.Success(beers))
+            emit(Resource.Success<List<Beer>>(beers))
         } catch (e : HttpException) {
-            emit(Resource.Error(e.localizedMessage ?: "Unknown error occured"))
+            emit(Resource.Error<List<Beer>>(e.localizedMessage ?: "Unknown error occured"))
         } catch (e:IOException) {
-            emit(Resource.Error("Couldn't reach server. Bad internet"))
+            emit(Resource.Error<List<Beer>>("Couldn't reach server. Bad internet"))
         }
     }
 
