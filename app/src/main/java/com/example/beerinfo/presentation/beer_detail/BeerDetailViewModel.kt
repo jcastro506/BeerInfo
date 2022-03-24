@@ -7,17 +7,23 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.beerinfo.common.Resource
+import com.example.beerinfo.domain.model.Beer
+import com.example.beerinfo.domain.repository.BeerRepository
 import com.example.beerinfo.domain.use_case.getAllBeers.GetBeersUseCase
 import com.example.beerinfo.domain.use_case.getBeer.GetBeerUseCase
 import com.example.beerinfo.presentation.beer_list.BeerListState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import retrofit2.HttpException
+import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
 class BeerDetailViewModel @Inject constructor(
-    private val getBeerUseCase: GetBeerUseCase,
+    private val repository: BeerRepository,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -31,7 +37,7 @@ class BeerDetailViewModel @Inject constructor(
     }
 
     private fun getBeer(beerId : Int) {
-        getBeerUseCase(beerId).onEach { result ->
+        invoke(beerId).onEach { result ->
             when(result) {
                 is Resource.Success -> {
                     _state.value = BeerDetailsState(beer = result.data)
@@ -47,4 +53,18 @@ class BeerDetailViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
+
+
+    private fun invoke(beerId : Int) : Flow<Resource<Beer>> = flow {
+        try {
+            emit(Resource.Loading<Beer>())
+            val beer = repository.getBeerDetails(beerId)
+            emit(Resource.Success<Beer>(beer))
+        } catch (e : HttpException) {
+            emit(Resource.Error<Beer>(e.localizedMessage ?: "Unknown error occurred"))
+        } catch (e: IOException) {
+            emit(Resource.Error<Beer>("Couldn't reach server. Bad internet"))
+        }
+    }
+
 }
