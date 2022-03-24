@@ -25,7 +25,7 @@ import javax.inject.Inject
 class BeerDetailViewModel @Inject constructor(
     private val repository: BeerRepository,
     private val savedStateHandle: SavedStateHandle
-) : ViewModel() {
+) : ViewModel(){
 
     private val _state = mutableStateOf(BeerDetailsState())
     val state : State<BeerDetailsState> = _state
