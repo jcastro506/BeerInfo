@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -43,18 +44,24 @@ fun BeerDetails(
     Column(modifier = Modifier
         .fillMaxWidth()
         .padding(8.dp)) {
-        Row(modifier = Modifier
-            .border(width = 4.dp, color = Color.Blue)) {
-            Image(painter = rememberImagePainter(beer.imageUrl), contentDescription = beer.name)
-            Column(modifier = Modifier
-                .align(Alignment.CenterVertically)
-                .border(4.dp, color = Color.Red)) {
-                Text(text = beer.name, fontSize = 24.sp, modifier = Modifier
-                    .padding(8.dp)
-                    .align(Alignment.CenterHorizontally))
-                Text(text = "IBU: ${beer.ibu.toString()}", fontSize = 24.sp, modifier = Modifier
-                    .padding(8.dp)
-                    .align(Alignment.CenterHorizontally))
+        Row(verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .padding(8.dp)
+                .fillMaxWidth()) {
+            Box(contentAlignment = Alignment.Center,
+                modifier = Modifier) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier) {
+                    Image(painter = rememberImagePainter(beer.imageUrl), contentDescription = beer.name)
+                    Text(text = beer.name, textAlign = TextAlign.Center, fontSize = 24.sp, modifier = Modifier
+                        .padding(8.dp))
+                    Text(text = "IBU: ${beer.ibu.toString()}", fontSize = 24.sp,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                        .padding(8.dp))
+                }
             }
         }
         Spacer(modifier = Modifier.padding(12.dp))
