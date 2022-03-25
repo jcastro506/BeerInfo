@@ -41,16 +41,19 @@ fun BeerDetails(
     beer: Beer
 ) {
     Column(modifier = Modifier
-        .fillMaxWidth().padding(8.dp)) {
+        .fillMaxWidth()
+        .padding(8.dp)) {
         Row(modifier = Modifier
             .align(Alignment.CenterHorizontally)) {
             Image(painter = rememberImagePainter(beer.imageUrl), contentDescription = beer.name)
             Column(modifier = Modifier
                 .align(Alignment.CenterVertically)) {
                 Text(text = beer.name, fontSize = 24.sp, modifier = Modifier
-                    .padding(8.dp).align(Alignment.CenterHorizontally))
+                    .padding(8.dp)
+                    .align(Alignment.CenterHorizontally))
                 Text(text = "IBU: ${beer.ibu.toString()}", fontSize = 24.sp, modifier = Modifier
-                    .padding(8.dp).align(Alignment.CenterHorizontally))
+                    .padding(8.dp)
+                    .align(Alignment.CenterHorizontally))
             }
         }
         Spacer(modifier = Modifier.padding(12.dp))
@@ -62,7 +65,7 @@ fun BeerDetails(
                     modifier = Modifier.padding(), softWrap = true)
             }
             Row(modifier = Modifier.padding(6.dp)) {
-                Text(text = beer.description, fontSize = 12.sp, )
+                Text(text = beer.description, fontSize = 13.sp, )
             }
             Spacer(modifier = Modifier.padding(12.dp))
             Row(modifier = Modifier) {
@@ -72,14 +75,19 @@ fun BeerDetails(
                     Text(text = "Malt: ", fontSize = 14.sp)
                     IngredientsMalt(ingredients = beer.ingredients)
             }
-            Spacer(modifier = Modifier.padding(6.dp))
             Row(modifier = Modifier.padding(6.dp)) {
                 Text(text = "Hops: ", fontSize = 14.sp)
                 IngredientsHops(ingredients = beer.ingredients)
             }
-            Spacer(modifier = Modifier.padding(6.dp))
             Row(modifier = Modifier.padding(6.dp)) {
                 Text(text = "Yeast:  ${beer.ingredients.yeast}", fontSize = 14.sp)
+            }
+            Spacer(modifier = Modifier.padding(12.dp))
+            Row(modifier = Modifier) {
+                Text(text = "Food Pairings", fontSize = 20.sp, fontStyle = FontStyle.Italic)
+            }
+            Row(modifier = Modifier.padding(6.dp)) {
+                FoodPairings(pairings = beer.foodPairing)
             }
         }
     }
@@ -108,6 +116,19 @@ fun IngredientsHops(
         .padding(start = 4.dp)) {
         ingredients.hops.forEach { ingredient ->
             Text(text = ingredient.name, fontSize = 13.sp)
+        }
+    }
+}
+
+@Composable
+fun FoodPairings(
+    pairings : List<*>
+) {
+    Column(modifier = Modifier
+        .wrapContentSize(align = Alignment.Center)
+        .padding(start = 4.dp)) {
+        pairings.forEach { pair ->
+            Text(text = "- $pair", fontSize = 13.sp)
         }
     }
 }
