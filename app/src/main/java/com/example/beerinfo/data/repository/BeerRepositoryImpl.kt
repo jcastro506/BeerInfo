@@ -9,8 +9,8 @@ class BeerRepositoryImpl @Inject constructor(
     private val api : RetrofitApi
 ) : BeerRepository {
 
-    override suspend fun getAllBeers(): List<Beer> {
-        return api.getAllBeers()
+    override suspend fun getAllBeers(page : Int, perPage : Int): List<Beer> {
+        return api.getAllBeers(page = page, per_page = perPage)
     }
 
     override suspend fun getBeerDetails(beerId: Int): List<Beer> {

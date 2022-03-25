@@ -1,6 +1,7 @@
 package com.example.beerinfo.presentation.beer_list.components
 
 
+import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -11,8 +12,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -40,36 +40,71 @@ import com.example.beerinfo.R
 import com.example.beerinfo.data.remote.dto.BeerListResponseItem
 import com.example.beerinfo.domain.model.Beer
 import com.example.beerinfo.presentation.beer_list.BeerListViewModel
+import com.example.beerinfo.presentation.beer_list.pageSize
 
 @Composable
 fun BeerListScreen(
     viewModel: BeerListViewModel,
-    navController: NavController
+    navController: NavController,
 ) {
 
     val state = viewModel.state.value
     val allBeers = state.beers
+    val beersList = viewModel.beersList.value
+    val page = viewModel.page.value
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
-            items(state.beers) { beer ->
-                BeerRow(beer = beer, navController = navController, onItemClick = {
-                    navController.navigate("beer_details_screen/${beer.id}")
-                })
+    androidx.compose.material.Surface(
+        color = Color.White,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Column {
+            //Spacer(modifier = Modifier.height(20.dp))
+            Image(
+                painter = painterResource(id = R.drawable.ic_baseline_sports_bar_24),
+                contentDescription = "App Logo",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(CenterHorizontally)
+            )
+            LazyColumn(modifier = Modifier.clip(RoundedCornerShape(10.dp)).padding(10.dp)
+                .fillMaxSize().align(Alignment.CenterHorizontally)) {
+                    itemsIndexed(items = allBeers) { index, beer ->
+                        if ((index + 1) >= (page * pageSize )) {
+                            viewModel.nextPage()
+                        }
+                    BeerCard(beer = beer, onItemClick = {
+                        navController.navigate("beer_details_screen/${beer.id}")
+                    })
+                }
             }
         }
-        if(state.isLoading) {
-            CircularProgressIndicator(modifier = Modifier.align(Center))
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Center) {
+            if (state.isLoading) {
+                CircularProgressIndicator(color = Color.Green)
+            }
         }
     }
 }
 
 
 @Composable
-fun BeerRow(
+fun BeerCard(
     beer: Beer,
-    navController: NavController,
     onItemClick: (Beer) -> Unit
 ) {
-    Text(text = beer.name, modifier = Modifier.clickable {onItemClick(beer)})
+    Box(contentAlignment = Center , modifier = Modifier
+        .shadow(5.dp)
+        .clip(RoundedCornerShape(10.dp))
+        .aspectRatio(1f)
+        .clickable { onItemClick(beer) }) {
+        
+        Column() {
+            Image(painter = rememberImagePainter(beer.imageUrl), contentDescription = beer.name, 
+            modifier = Modifier
+                .size(210.dp)
+                .align(CenterHorizontally))
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(text = beer.name, fontSize = 20.sp, textAlign = TextAlign.Center, color = Color.Black, modifier = Modifier.fillMaxWidth())
+        }
+    }
 }
