@@ -44,10 +44,11 @@ fun BeerDetails(
         .fillMaxWidth()
         .padding(8.dp)) {
         Row(modifier = Modifier
-            .align(Alignment.CenterHorizontally)) {
+            .border(width = 4.dp, color = Color.Blue)) {
             Image(painter = rememberImagePainter(beer.imageUrl), contentDescription = beer.name)
             Column(modifier = Modifier
-                .align(Alignment.CenterVertically)) {
+                .align(Alignment.CenterVertically)
+                .border(4.dp, color = Color.Red)) {
                 Text(text = beer.name, fontSize = 24.sp, modifier = Modifier
                     .padding(8.dp)
                     .align(Alignment.CenterHorizontally))
