@@ -49,7 +49,6 @@ fun BeerListScreen(
 ) {
 
     val state = viewModel.state.value
-    val allBeers = state.beers
     val beersList = viewModel.beersList.value
     val page = viewModel.page.value
 
@@ -58,7 +57,6 @@ fun BeerListScreen(
         modifier = Modifier.fillMaxSize()
     ) {
         Column {
-            //Spacer(modifier = Modifier.height(20.dp))
             Image(
                 painter = painterResource(id = R.drawable.ic_baseline_sports_bar_24),
                 contentDescription = "App Logo",

@@ -19,7 +19,6 @@ import javax.inject.Inject
 
 
 const val pageSize = 25
-const val hardCodedSize = 80
 
 @HiltViewModel
 class BeerListViewModel @Inject constructor(
@@ -44,7 +43,6 @@ class BeerListViewModel @Inject constructor(
                 is Resource.Success -> {
                     _state.value = BeerListState(beers = result.data ?: emptyList())
                     beersList.value = result.data!!
-                   //page.value = page.value + 1
                 }
                 is Resource.Error -> {
                     _state.value = BeerListState(
@@ -58,8 +56,7 @@ class BeerListViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    //PAGINATION ATTEMPT/ CURRENTLY BUGGY
-
+    //PAGINATION LOGIC
     fun nextPage() {
         viewModelScope.launch {
             //stop recompose from continuously triggering
@@ -91,10 +88,8 @@ class BeerListViewModel @Inject constructor(
     fun appendNewBeers(beers : List<Beer>) {
         val current = ArrayList(beersList.value)
         current.addAll(beers)
-        //_state.value = BeerListState(beers = current)
         this.beersList.value = current
     }
-
     //end of pagination logic
 
     //WOULD TEST FOR EACH EMISSION STATE BEING HIT
