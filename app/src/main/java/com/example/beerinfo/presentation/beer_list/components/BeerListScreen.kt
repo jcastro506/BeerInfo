@@ -44,7 +44,7 @@ import com.example.beerinfo.presentation.beer_list.pageSize
 
 @Composable
 fun BeerListScreen(
-    viewModel: BeerListViewModel,
+    viewModel: BeerListViewModel = hiltViewModel(),
     navController: NavController,
 ) {
 
@@ -66,8 +66,11 @@ fun BeerListScreen(
                     .fillMaxWidth()
                     .align(CenterHorizontally)
             )
-            LazyColumn(modifier = Modifier.clip(RoundedCornerShape(10.dp)).padding(10.dp)
-                .fillMaxSize().align(Alignment.CenterHorizontally)) {
+            LazyColumn(modifier = Modifier
+                .clip(RoundedCornerShape(10.dp))
+                .padding(10.dp)
+                .fillMaxSize()
+                .align(Alignment.CenterHorizontally)) {
                     itemsIndexed(items = allBeers) { index, beer ->
                         if ((index + 1) >= (page * pageSize )) {
                             viewModel.nextPage()

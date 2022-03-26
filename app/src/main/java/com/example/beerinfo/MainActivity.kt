@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
                         composable(
                             route = "beer_list_screen"
                         ) {
-                            BeerListScreen(navController = navController, viewModel = beerListViewModel)
+                            BeerListScreen(navController = navController)
                         }
                         composable(
                             route = "beer_details_screen/{beer_id}"
