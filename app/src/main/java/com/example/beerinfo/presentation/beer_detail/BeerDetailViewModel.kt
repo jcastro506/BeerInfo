@@ -29,6 +29,7 @@ class BeerDetailViewModel @Inject constructor(
     val state : State<BeerDetailsState> = _state
 
     init {
+        //WOULD WRITE TEST TO ENSURE SAVEDSTATE IS RECEIVING VALUES
         savedStateHandle.get<String>("beer_id")?.let { id ->
             Log.d("NumID", "$id")
             getBeer(id.toInt())
@@ -37,6 +38,7 @@ class BeerDetailViewModel @Inject constructor(
 
 
     private fun getBeer(beerId : Int) {
+        //WOULD TEST INVOCATION BEING HIT ON EACH
         invoke(beerId).onEach { result ->
             when(result) {
                 is Resource.Success -> {
@@ -57,6 +59,7 @@ class BeerDetailViewModel @Inject constructor(
 
     private fun invoke(beerId : Int) : Flow<Resource<Beer>> = flow {
         try {
+            //WOULD TEST CORRECT EMISSIONS
             emit(Resource.Loading<Beer>())
             val beer = repository.getBeerDetails(beerId)
             emit(Resource.Success<Beer>(beer.get(0)))

@@ -5,6 +5,7 @@ import com.example.beerinfo.domain.model.Beer
 import com.example.beerinfo.domain.repository.BeerRepository
 import javax.inject.Inject
 
+//IMPLEMENTATION OF THE REPOSITORY/NOT USED FOR TESTING/ EXTENDS THE TESTING REP. FUNCTIONS
 class BeerRepositoryImpl @Inject constructor(
     private val api : RetrofitApi
 ) : BeerRepository {

@@ -66,6 +66,7 @@ fun BeerDetails(
         }
         Spacer(modifier = Modifier.padding(12.dp))
         Column(modifier = Modifier
+            .border(2.dp, color = Color.Black)
             .padding(8.dp)
             .verticalScroll(rememberScrollState(), enabled = true)) {
             Row(modifier = Modifier) {

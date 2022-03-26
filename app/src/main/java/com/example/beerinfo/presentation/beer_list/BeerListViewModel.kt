@@ -41,6 +41,7 @@ class BeerListViewModel @Inject constructor(
     private fun getBeers() {
         invoke().onEach { result ->
             when(result) {
+                //WOULD WRITE TESTS FOR EACH CASE ENSURING CORRECT RESPONSE
                 is Resource.Success -> {
                     _state.value = BeerListState(beers = result.data ?: emptyList())
                     beersList.value = result.data!!
@@ -58,7 +59,7 @@ class BeerListViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    //pagination logic/attempt
+    //PAGINATION ATTEMPT/ CURRENTLY BUGGY
 
     fun nextPage() {
         viewModelScope.launch {
@@ -97,7 +98,7 @@ class BeerListViewModel @Inject constructor(
 
     //end of pagination logic
 
-
+    //WOULD TEST FOR EACH EMISSION STATE BEING HIT
     private fun invoke() : kotlinx.coroutines.flow.Flow<Resource<List<Beer>>> = flow {
         try {
             emit(Resource.Loading<List<Beer>>())
