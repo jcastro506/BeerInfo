@@ -71,7 +71,8 @@ fun BeerListScreen(
                 .padding(10.dp)
                 .fillMaxSize()
                 .align(Alignment.CenterHorizontally)) {
-                    itemsIndexed(items = allBeers) { index, beer ->
+                    itemsIndexed(items = beersList) { index, beer ->
+                        viewModel.onChangeBeerScrollPosition(index)
                         if ((index + 1) >= (page * pageSize )) {
                             viewModel.nextPage()
                         }

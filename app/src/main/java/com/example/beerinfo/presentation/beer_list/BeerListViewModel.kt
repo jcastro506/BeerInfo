@@ -26,13 +26,12 @@ class BeerListViewModel @Inject constructor(
     private val repository: BeerRepository
 ) : ViewModel() {
 
-    private val _state = mutableStateOf(BeerListState())
-    val state : State<BeerListState> = _state
+    private var _state = mutableStateOf(BeerListState())
+    var state : State<BeerListState> = _state
     val page = mutableStateOf(1)
     var beerListScrollPosition = 0
 
     var beersList = mutableStateOf<List<Beer>>(listOf())
-    var endReached = mutableStateOf(false)
 
     init {
         getBeers()
@@ -73,7 +72,7 @@ class BeerListViewModel @Inject constructor(
                 delay(1000)
 
                 if(page.value > 1) {
-                    val result = repository.getAllBeers(page.value, hardCodedSize)
+                    val result = repository.getAllBeers(page.value, pageSize)
                     appendNewBeers(result)
                 }
                 _state.value.isLoading = false
@@ -93,7 +92,7 @@ class BeerListViewModel @Inject constructor(
         val current = ArrayList(beersList.value)
         current.addAll(beers)
         //_state.value = BeerListState(beers = current)
-        beersList.value = current
+        this.beersList.value = current
     }
 
     //end of pagination logic
@@ -102,8 +101,8 @@ class BeerListViewModel @Inject constructor(
     private fun invoke() : kotlinx.coroutines.flow.Flow<Resource<List<Beer>>> = flow {
         try {
             emit(Resource.Loading<List<Beer>>())
-            val beers = repository.getAllBeers(page = page.value, hardCodedSize )
-            beersList.value = repository.getAllBeers(page = page.value, hardCodedSize)
+            val beers = repository.getAllBeers(page = page.value, pageSize )
+            beersList.value = repository.getAllBeers(page = page.value, pageSize)
             emit(Resource.Success<List<Beer>>(beers))
         } catch (e : HttpException) {
             emit(Resource.Error<List<Beer>>(e.localizedMessage ?: "Unknown error occured"))
